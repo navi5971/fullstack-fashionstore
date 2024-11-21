@@ -1,0 +1,50 @@
+name: CI/CD for Fashion Store
+
+on:
+  push:
+    branches:
+      - main       # Trigger workflow on push to the main branch
+  pull_request:
+    branches:
+      - main       # Trigger workflow on pull requests targeting the main branch
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js for backend
+      - name: Set up Node.js (Backend)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # Step 3: Install backend dependencies
+      - name: Install Backend Dependencies
+        working-directory: ./backend
+        run: npm install
+
+      # Step 4: Set up Node.js for frontend
+      - name: Set up Node.js (Frontend)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # Step 5: Install frontend dependencies (fashion-front)
+      - name: Install Frontend Dependencies
+        working-directory: ./fashion-front
+        run: npm install
+
+      # Step 6: Run backend tests
+      - name: Run Backend Tests
+        working-directory: ./backend
+        run: npm test
+
+      # Step 7: Run frontend tests
+      - name: Run Frontend Tests
+        working-directory: ./fashion-front
+        run: npm test

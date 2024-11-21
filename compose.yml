@@ -1,0 +1,32 @@
+#version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend-container
+    ports:
+      - "5000:5000"  # Expose port 5000 for the backend
+    volumes:
+      - ./backend:/app  # Bind mount backend code (optional for live updates)
+    networks:
+      - fullstack-fashion-network
+
+  frontend:
+    build:
+      context: ./fashion-front/fashion-store
+      dockerfile: Dockerfile
+    container_name: frontend-container
+    ports:
+      - "3000:3000"  # Expose port 3000 for the frontend
+    volumes:
+      - ./fashion-front/fashion-store:/app  # Bind mount frontend code (optional for live updates)
+    depends_on:
+      - backend  # Ensure backend is up before frontend
+    networks:
+      - fullstack-fashion-network
+
+networks:
+  fullstack-fashion-network:
+    driver: bridge
