@@ -1,5 +1,3 @@
 #!/bin/bash
-#cd /backend
-#node server.js
-docker build -t backend-image .
-docker run -p 5000:8080 backend-image
+cd /app
+node server.js  # Or "node server.js" if your entry point is server.js
