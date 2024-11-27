@@ -1,3 +1,3 @@
 #!/bin/bash
-docker build -t frontend-image .
-docker run -p 80:80 frontend-image
+cd /app
+npm start  # React's default start command
