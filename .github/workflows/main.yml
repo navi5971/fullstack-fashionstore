@@ -3,7 +3,7 @@ name: CI/CD for Fashion Store
 on:
   push:
     branches:
-      - main           # Trigger workflow on push to the main branch
+      - master           # Trigger workflow on push to the main branch
       - products       # Trigger workflow for the products branch
       - aboutus        # Trigger workflow for the aboutus branch
       - adminhomefront # Trigger workflow for the adminhomefront branch
@@ -14,7 +14,7 @@ on:
       - blog           # Trigger workflow for the blog branch
   pull_request:
     branches:
-      - main           # Trigger workflow on pull requests targeting the main branch
+      - master           # Trigger workflow on pull requests targeting the main branch
 
 jobs:
   build-and-deploy:
