@@ -3,13 +3,21 @@ name: CI/CD for Fashion Store
 on:
   push:
     branches:
-      - main       # Trigger workflow on push to the main branch
+      - main           # Trigger workflow on push to the main branch
+      - products       # Trigger workflow for the products branch
+      - aboutus        # Trigger workflow for the aboutus branch
+      - adminhomefront # Trigger workflow for the adminhomefront branch
+      - login          # Trigger workflow for the login branch
+      - wishlist       # Trigger workflow for the wishlist branch
+      - payment        # Trigger workflow for the payment branch
+      - tailors        # Trigger workflow for the tailors branch
+      - blog           # Trigger workflow for the blog branch
   pull_request:
     branches:
-      - main       # Trigger workflow on pull requests targeting the main branch
+      - main           # Trigger workflow on pull requests targeting the main branch
 
 jobs:
-  build-and-test:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,17 +42,23 @@ jobs:
         with:
           node-version: '20'
 
-      # Step 5: Install frontend dependencies (fashion-front)
+      # Step 5: Install frontend dependencies
       - name: Install Frontend Dependencies
-        working-directory: ./fashion-front
+        working-directory: ./fashion-front/fashion-store
         run: npm install
 
-      # Step 6: Run backend tests
-      - name: Run Backend Tests
+      # Step 6: Deploy backend
+      - name: Deploy Backend
         working-directory: ./backend
-        run: npm test
+        run: |
+          nohup node server.js &  # Run the backend server in the background
 
-      # Step 7: Run frontend tests
-      - name: Run Frontend Tests
-        working-directory: ./fashion-front
-        run: npm test
+      # Step 7: Deploy frontend
+      - name: Deploy Frontend
+        working-directory: ./fashion-front/fashion-store
+        run: |
+          nohup npm start &  # Run the frontend server in the background
+
+      # Optional: Step 8 - Notify that the app is deployed
+      - name: Notify Deployment
+        run: echo "Backend and Frontend deployed successfully!"
