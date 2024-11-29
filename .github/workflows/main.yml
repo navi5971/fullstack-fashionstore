@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: '20'
 
-      # Step 6: Install frontend dependencies
+      # Step 6: install frontend dependencies
       - name: Install Frontend Dependencies
         working-directory: ./fashion-front
         run: npm install
