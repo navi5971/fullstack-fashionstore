@@ -1,35 +1,36 @@
 const Item = require('../models/item');
 
 // get all items
-exports.getAllItems = async (req, res) => {
+const getAllItems = async (req, res) => {
     try {
         const stocks = await Item.find({});
         console.log("Items fetched from DB:", stocks);
         res.status(200).json(stocks);
     } catch (error) {
-        res.status(400).json({ message: error });
+        console.error("Error fetching items:", error); // Logs detailed error for debugging
+        res.status(500).json({ message: error.message || "An unexpected error occurred" }); // Sends clear error response
     }
 };
 
 
-/////////////add a new item
-exports.addItem = async (req, res) => {
-    const { name, prices, variants, description, targetmarket, category, collection } = req.body;
+//add a new item
+const addItem = async (req, res) => {
+    const { name, prices, variants, description, targetmarket, category, collection,image } = req.body;
     try {
         const newItem = new Item({
-            name, prices, description, variants, targetmarket, category, collection
+            name, prices, description, variants, targetmarket, category, collection,image
         });
         await newItem.save();
         console.log("New item saved to DB:", newItem);
         res.status(201).json(newItem);
     } catch (error) {
-        res.status(400).json({ error });
+        res.status(400).json({ error: 'Bad Request', message: 'Invalid data provided' });
     }
 };
 
 
-/////update an item by ID
-exports.updateItem = async (req, res) => {
+//update an item by ID
+const updateItem = async (req, res) => {
     try {
         const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
@@ -37,7 +38,7 @@ exports.updateItem = async (req, res) => {
         });
 
         if (!updatedItem) {
-            return res.status(404).json({ message: 'Item not found' });
+            return res.status(404).json({ message: "Item not found" });
         }
 
         res.status(200).json({ updatedItem });
@@ -47,17 +48,22 @@ exports.updateItem = async (req, res) => {
 };
 
 //delete an item by ID
-exports.deleteItem = async (req, res) => {
+const deleteItem = async (req, res) => {
     try {
-        await Item.findByIdAndDelete(req.params.id);
-        res.status(204).json({ status: 'Success' });
+        const item = await Item.findByIdAndDelete(req.params.id);
+        if (!item) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+        return res.status(204).send();  // successfully deleted
     } catch (error) {
-        res.status(500).json({ message: 'Failed to delete item', error });
+        return res.status(500).json({ message: 'Failed to delete item', error });
     }
 };
 
+
+
 //search items by category
-exports.searchItems = async (req, res) => {
+const searchItems = async (req, res) => {
     const { category } = req.query;
     try {
         const categories = await Item.find({
@@ -70,7 +76,7 @@ exports.searchItems = async (req, res) => {
 };
 
 //get items by collection name
-exports.getItemsByCollection = async (req, res) => {
+const getItemsByCollection = async (req, res) => {
     const collectionName = req.params.name;
     try {
         const items = await Item.find({ collection: collectionName });
@@ -84,7 +90,7 @@ exports.getItemsByCollection = async (req, res) => {
 };
 
 // Get all unique collections
-exports.getCollections = async (req, res) => {
+const getCollections = async (req, res) => {
     try {
         const collectionNames = await Item.distinct('collection');
         if (collectionNames.length === 0) {
@@ -95,3 +101,9 @@ exports.getCollections = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+module.exports = {
+    getAllItems,
+    addItem,
+    updateItem,
+    deleteItem,
+  };

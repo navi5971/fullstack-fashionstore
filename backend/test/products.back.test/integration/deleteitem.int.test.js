@@ -12,18 +12,20 @@ jest.setTimeout(10000);
 describe('DELETE /api/items/items/:id', () => {
     let item;
 
+
+    
     // Setup: Create a sample item before tests
     beforeAll(async () => {
-        await Item.deleteMany({});
+        
         // Ensure no previous connection exists
         if (mongoose.connection.readyState === 0) {
           await mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true });}
-       
+          await Item.deleteMany({});
 
         // Create a test item in the database
         item = await Item.create({
             name: "Hat",
-            variants: ["small", "medium", "large"], 
+            variants: ["small", "medium", "large"], // Matches the format from the database
             prices: { 
               small: 10,
               medium: 15,
@@ -42,6 +44,12 @@ describe('DELETE /api/items/items/:id', () => {
     afterAll(async () => {
         await Item.deleteMany({});
         mongoose.connection.close();
+        
+    });
+    afterEach(async () => {
+
+        await Item.deleteMany({});
+       
     });
 
     test('should successfully delete an item and return a 204 status', async () => {
