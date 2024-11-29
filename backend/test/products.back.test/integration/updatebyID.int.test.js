@@ -3,13 +3,13 @@ const express = require("express");
 const request = require("supertest");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
-const server = require("../../../server.js"); // Adjust this path to your server file
-const Item = require("../../../models/item.js"); // Adjust this path to your Item model
+const server = require("../../../server.js"); 
+const Item = require("../../../models/item.js"); 
 const itemRouter = require("../../../routes/itemroutes.js")
 const sinon = require('sinon');
 const { getAllItems } = require('../../../controllers/itemcont.js');
 
-// Connect to MongoDB Atlas for testing
+//connect to MongoDB Atlas for testing
 const mongoURL = "mongodb+srv://Navithma:Navithma78@cluster1.gqwja.mongodb.net/testdb?retryWrites=true&w=majority";
 beforeAll(async () => {
    
@@ -18,21 +18,21 @@ beforeAll(async () => {
       }
 });
 
-// Clear the test database after each test
+//clear the test database after each test
 afterEach(async () => {
     await Item.deleteMany({});
 });
 
-// Close the database connection after all tests are done
+//close the database connection after all tests are done
 afterAll(async () => {
     await mongoose.connection.close();
 });
 
-// Test case for successful item update
+//test case for successful item update
 describe("PUT /api/items/items/:id", () => {
     let itemId;
 
-    // Create a sample item before the tests
+    //create a sample item before the tests
     beforeAll(async () => {
         const newItem = new Item({
             name: "Shirt",

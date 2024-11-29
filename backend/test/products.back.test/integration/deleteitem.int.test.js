@@ -2,8 +2,8 @@ const express = require("express");
 const request = require("supertest");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
-const server = require("../../../server.js"); // Adjust this path to your server file
-const Item = require("../../../models/item.js"); // Adjust this path to your Item model
+const server = require("../../../server.js"); 
+const Item = require("../../../models/item.js");
 const itemRouter = require("../../../routes/itemroutes.js")
 const sinon = require('sinon');
 const mongoURL = "mongodb+srv://Navithma:Navithma78@cluster1.gqwja.mongodb.net/testdb?retryWrites=true&w=majority";
@@ -23,8 +23,8 @@ describe('DELETE /api/items/items/:id', () => {
         // Create a test item in the database
         item = await Item.create({
             name: "Hat",
-            variants: ["small", "medium", "large"], // Matches the format from the database
-            prices: { // Converted to the object format as per your database
+            variants: ["small", "medium", "large"], 
+            prices: { 
               small: 10,
               medium: 15,
               large: 20
