@@ -3,13 +3,13 @@ const express = require("express");
 const request = require("supertest");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
-const server = require("../../../server.js"); 
-const Item = require("../../../models/item.js"); 
+const server = require("../../../server.js"); // Adjust this path to your server file
+const Item = require("../../../models/item.js"); // Adjust this path to your Item model
 const itemRouter = require("../../../routes/itemroutes.js")
 const sinon = require('sinon');
 const { getAllItems } = require('../../../controllers/itemcont.js');
 
-//connect to MongoDB Atlas for testing
+// Connect to MongoDB Atlas for testing
 const mongoURL = "mongodb+srv://Navithma:Navithma78@cluster1.gqwja.mongodb.net/testdb?retryWrites=true&w=majority";
 beforeAll(async () => {
    
@@ -18,22 +18,27 @@ beforeAll(async () => {
       }
 });
 
-//clear the test database after each test
+
+
+// Clear the test database after each test
 afterEach(async () => {
     await Item.deleteMany({});
 });
 
-//close the database connection after all tests are done
+// Close the database connection after all tests are done
 afterAll(async () => {
+    await Item.deleteMany({});
     await mongoose.connection.close();
+    
+   
 });
 
-//test case for successful item update
-describe("PUT /api/items/items/:id", () => {
+// Test case for successful item update
+describe("PATCH /api/items/items/:id", () => {
     let itemId;
 
-    //create a sample item before the tests
-    beforeAll(async () => {
+    // Create a sample item before the tests
+    beforeEach(async () => {
         const newItem = new Item({
             name: "Shirt",
             prices: { small: 10, medium: 15, large: 20 },
@@ -56,7 +61,7 @@ describe("PUT /api/items/items/:id", () => {
         };
 
         const response = await request(server)
-            .put(`/api/items/items/${itemId}`)
+            .patch(`/api/items/items/${itemId}`)
             .send(updatedData);
 
         expect(response.status).toBe(200);
@@ -71,7 +76,7 @@ describe("PUT /api/items/items/:id", () => {
         const updatedData = { name: "Non-existent Item" };
 
         const response = await request(server)
-            .put(`/api/items/items/${invalidId}`)
+            .patch(`/api/items/items/${invalidId}`)
             .send(updatedData);
 
         expect(response.status).toBe(404);
@@ -81,7 +86,7 @@ describe("PUT /api/items/items/:id", () => {
     test("should return a 500 error if there is a server issue", async () => {
         // Simulate a server error by passing invalid data to trigger a validation error
         const response = await request(server)
-            .put(`/api/items/items/${itemId}`)
+            .patch(`/api/items/items/${itemId}`)
             .send({ name: "" });  // Invalid name (since it's required)
 
         expect(response.status).toBe(500);

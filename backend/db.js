@@ -1,17 +1,13 @@
 const mongoose = require("mongoose");
 
-var mongoURL = 'mongodb+srv://Navithma:Navithma78@cluster1.gqwja.mongodb.net/fashiondb?tls=true'
+const connectDB = async (dbURI) => {
+    try {
+        await mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log(`Connected to MongoDB at ${dbURI}`);
+    } catch (err) {
+        console.error("Error connecting to MongoDB:", err);
+        process.exit(1); // Exit the process with failure
+    }
+};
 
-mongoose.connect(mongoURL, {useUnifiedTopology: true , useNewUrlParser: true})
-
-var db = mongoose.connection
-
-db.on('connected' , ()=>{
-    console.log('mongodb connected');
-})
-
-db.on('error' , ()=>{
-    console.log('mongodb connection failed');
-})
-
-module.exports = mongoose
+module.exports = connectDB;
