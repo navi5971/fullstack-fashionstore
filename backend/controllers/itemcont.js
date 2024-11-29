@@ -28,7 +28,7 @@ exports.addItem = async (req, res) => {
 };
 
 
-//update an item by ID
+/////update an item by ID
 exports.updateItem = async (req, res) => {
     try {
         const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {
