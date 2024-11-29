@@ -20,7 +20,7 @@ const itemSchema = new mongoose.Schema({
 
 
 
-const Item = mongoose.model("Item", itemSchema, "stocks");//here stock is db name and the itemModel is refernced in server.js
+const Item = mongoose.model("Item", itemSchema, "stocks");////here stock is db name and the itemModel is refernced in server.js
 console.log('Item model created:', Item);
 
 

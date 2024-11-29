@@ -4,6 +4,15 @@ on:
   push:
     branches:
       - main       # Trigger workflow on push to the main branch
+      - master           # Trigger workflow on push to the main branch
+      - products       # Trigger workflow for the products branch
+      - aboutus        # Trigger workflow for the aboutus branch
+      - adminhomefront # Trigger workflow for the adminhomefront branch
+      - login          # Trigger workflow for the login branch
+      - wishlist       # Trigger workflow for the wishlist branch
+      - payment        # Trigger workflow for the payment branch
+      - tailors        # Trigger workflow for the tailors branch
+      - blog           # Trigger workflow for the blog branch
   pull_request:
     branches:
       - main       # Trigger workflow on pull requests targeting the main branch
