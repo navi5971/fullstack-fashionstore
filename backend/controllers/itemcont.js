@@ -12,7 +12,7 @@ exports.getAllItems = async (req, res) => {
 };
 
 
-//add a new item
+/////////////add a new item
 exports.addItem = async (req, res) => {
     const { name, prices, variants, description, targetmarket, category, collection } = req.body;
     try {
