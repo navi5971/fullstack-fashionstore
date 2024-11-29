@@ -40,31 +40,16 @@ jobs:
         with:
           node-version: '20'
 
-<<<<<<< Updated upstream
-      # Step 5: Install frontend dependencies (fashion-front)
-=======
       # Step 6: Install frontend dependencies
->>>>>>> Stashed changes
       - name: Install Frontend Dependencies
         working-directory: ./fashion-front
         run: npm install
 
-<<<<<<< Updated upstream
-      # Step 6: Run backend tests
-      - name: Run Backend Tests
-=======
       # Step 7: Deploy backend
       - name: Deploy Backend
->>>>>>> Stashed changes
         working-directory: ./backend
         run: npm test
 
-<<<<<<< Updated upstream
-      # Step 7: Run frontend tests
-      - name: Run Frontend Tests
-        working-directory: ./fashion-front
-        run: npm test
-=======
       # Step 8: Deploy frontend
       - name: Deploy Frontend
         working-directory: ./fashion-front/fashion-store
@@ -74,4 +59,3 @@ jobs:
       # Optional: Step 9 - Notify that the app is deployed
       - name: Notify Deployment
         run: echo "Backend and Frontend deployed successfully!"
->>>>>>> Stashed changes
