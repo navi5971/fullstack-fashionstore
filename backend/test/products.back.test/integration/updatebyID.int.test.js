@@ -12,7 +12,7 @@ const { getAllItems } = require('../../../controllers/itemcont.js');
 // Connect to MongoDB Atlas for testing
 const mongoURL = "mongodb+srv://Navithma:Navithma78@cluster1.gqwja.mongodb.net/testdb?retryWrites=true&w=majority";
 beforeAll(async () => {
-   
+    jest.setTimeout(10000); 
     if (mongoose.connection.readyState === 0) {
         await mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true });
       }
