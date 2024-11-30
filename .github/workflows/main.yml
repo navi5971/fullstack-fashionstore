@@ -40,7 +40,7 @@ jobs:
       - name: Run Integration Tests for Products
         if: github.ref_name == 'products' || github.ref_name == 'master'
         working-directory: ./backend
-        run: npx test -- test/products.back.test/integration
+        run: npx npm test -- test/products.back.test/integration
 
       # Step 5: Set up Node.js for frontend
       - name: Set up Node.js (Frontend)
