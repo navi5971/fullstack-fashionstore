@@ -1,7 +1,7 @@
 const express = require("express");
 const request = require("supertest");
 const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
+
 const server = require("../../../server.js"); 
 const Item = require("../../../models/item.js");
 const itemRouter = require("../../../routes/itemroutes.js")
