@@ -17,8 +17,8 @@ on:
       - master           # Trigger workflow on pull requests targeting the main branch
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: windows-latest
 
     steps:
       # Step 1: Checkout code
@@ -36,6 +36,12 @@ jobs:
         working-directory: ./backend
         run: npm install
 
+        
+      # Step 4: Run tests (products branch-specific and master)
+      - name: Run Integration Tests for Products
+        if: github.ref_name == 'products' || github.ref_name == 'master'
+        working-directory: ./backend
+        run: npm test -- test/products.back.test/integration
        
 
       # Step 5: Set up Node.js for frontend
