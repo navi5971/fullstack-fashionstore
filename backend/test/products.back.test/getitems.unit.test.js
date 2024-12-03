@@ -1,11 +1,9 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
+
 import sinon from 'sinon';
 import mongoose from 'mongoose';
-import server from '../../../server.js'; // Ensure .js extension is included
-import Item from '../../../models/item.js'; // Ensure .js extension is included
+import server from '../../server.js'; // Ensure .js extension is included
+import Item from '../../models/item.js'; // Ensure .js extension is included
 
-chai.use(chaiHttp);
 
 // Your test code
 
