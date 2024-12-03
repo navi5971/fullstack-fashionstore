@@ -1,25 +1,61 @@
-// test/products.back.test/integration/getitems.int.test.js
 const express = require("express");
-const request = require("supertest");
-const mongoose = require("mongoose");
-
-const server = require("../../../server.js"); 
-const Item = require("../../../models/item.js"); 
-const itemRouter = require("../../../routes/itemroutes.js")
 const sinon = require('sinon');
+const { expect } = require('chai');
+const mongoose = require("mongoose"); // Ensure mongoose is required
+const mongoURL = "mongodb+srv://Navithma:Navithma78@cluster1.gqwja.mongodb.net/testdb?retryWrites=true&w=majority";
+const Item = require("../../../models/item.js");
+const itemRouter = require("../../../routes/itemroutes.js");
 const { getAllItems } = require('../../../controllers/itemcont.js');
 
-
+// Initialize Express app
 const app = express();
 app.use(express.json());
-app.use("/", itemRouter);
+app.use("/", itemRouter); // Use the item routes
 
+describe('API Endpoint Tests', function () {
+  let findStub;
 
+  // Increase the timeout for the entire suite
+  this.timeout(10000);
 
+  before(async function () {
+    // Increase timeout for the before hook if needed
+    this.timeout(10000);
 
-describe('API Endpoint Tests', function() {
-  describe('getAllItems', function() {
-    it('Should return all items as a JSON array when items exist', async function() {
+    // Ensure mongoose connection is properly handled
+    if (mongoose.connection.readyState === 0) {
+      try {
+        await mongoose.connect(mongoURL, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        });
+      } catch (err) {
+        console.error("Database connection failed:", err);
+        throw err;
+      }
+    }
+
+    // Clear database (optional based on your use case)
+    await Item.deleteMany({});
+  });
+
+  after(async function () {
+    // Disconnect from the database after tests
+    await mongoose.disconnect();
+  });
+
+  // Before each test, stub Item.find to ensure we control its behavior
+  beforeEach(function () {
+    findStub = sinon.stub(Item, 'find');
+  });
+
+  // After each test, restore the stubbed method
+  afterEach(function () {
+    sinon.restore();
+  });
+
+  describe('getAllItems', function () {
+    it('Should return all items as a JSON array when items exist', async function () {
       const req = {}; // Mock request object (no specific parameters needed for this endpoint)
       const res = {
         status: sinon.stub().returnsThis(),
@@ -53,7 +89,7 @@ describe('API Endpoint Tests', function() {
       ];
 
       // Simulate the database call
-      sinon.stub(Item, 'find').returns(Promise.resolve(mockItems));
+      findStub.returns(Promise.resolve(mockItems));
 
       await getAllItems(req, res);
 
@@ -62,12 +98,9 @@ describe('API Endpoint Tests', function() {
 
       // Check that the response json method was called with the correct items data
       sinon.assert.calledWith(res.json, mockItems);
-
-      // Restore the original Item.find method
-      Item.find.restore();
     });
 
-    it('Should return an empty array if no items exist', async function() {
+    it('Should return an empty array if no items exist', async function () {
       const req = {}; // Mock request object
       const res = {
         status: sinon.stub().returnsThis(),
@@ -75,7 +108,7 @@ describe('API Endpoint Tests', function() {
       };
 
       // Simulate a case where no items are found
-      sinon.stub(Item, 'find').returns(Promise.resolve([]));
+      findStub.returns(Promise.resolve([]));
 
       await getAllItems(req, res);
 
@@ -84,12 +117,9 @@ describe('API Endpoint Tests', function() {
 
       // Check that the response json method was called with an empty array
       sinon.assert.calledWith(res.json, []);
-
-      // Restore the original Item.find method
-      Item.find.restore();
     });
 
-    it('Should return an error if fetching items fails', async function() {
+    it('Should return an error if fetching items fails', async function () {
       const req = {}; // Mock request object
       const res = {
         status: sinon.stub().returnsThis(),
@@ -97,7 +127,7 @@ describe('API Endpoint Tests', function() {
       };
 
       // Simulate an error during the database call
-      sinon.stub(Item, 'find').returns(Promise.reject(new Error('Database error')));
+      findStub.returns(Promise.reject(new Error('Database error')));
 
       await getAllItems(req, res);
 
@@ -106,10 +136,6 @@ describe('API Endpoint Tests', function() {
 
       // Check that the response json method was called with the error message
       sinon.assert.calledWith(res.json, { message: 'Database error' });
-
-      // Restore the original Item.find method
-      Item.find.restore();
     });
   });
 });
-
