@@ -12,6 +12,7 @@ on:
       - payment        # Trigger workflow for the payment branch
       - tailors        # Trigger workflow for the tailors branch
       - blog           # Trigger workflow for the blog branch
+      - Wishlist-Develop-Branch
   pull_request:
     branches:
       - master           # Trigger workflow on pull requests targeting the main branch
