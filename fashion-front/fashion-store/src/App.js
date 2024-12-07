@@ -14,7 +14,7 @@ import CollectionsList from "./components/collectionlist";
 import ProductForm from "./components/product/productfrom";
 import Cartscreen from "./screens/cartscreen";
 import Payment from "./screens/paymentform";
-import Wishlist from "./screens/wishlist";
+import { NotFound } from "./screens/404";
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           <Route path="/collection" element={<CollectionsList />} />
           <Route path="/cart" element={<Cartscreen />} />
           <Route path="/payment" element={<Payment />} />
-          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
