@@ -20,18 +20,20 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" exact element={<Home />} />
-          <Route path="/search" exact element={<Search />} />
-          <Route path="/search-results/:category" element={<SearchResults />} />
-          <Route path="/dash" element={<Dash />} />
-          <Route path="/additem" element={<ProductForm />} />
-          <Route path="/collection" element={<CollectionsList />} />
-          <Route path="/cart" element={<Cartscreen />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-        </Routes>
+       
+      <Navbar />
+          <Routes>
+            <Route path="/" exact element={<Home />} />
+            <Route path='/search' exact element={<Search/>}/>
+            <Route path="/search-results/:category" element={<SearchResults />} />
+            <Route path='/dash' element={<Dash/>}/>
+            <Route path='/additem' element={<ProductForm/>}/>
+            <Route path='/collection' element={<CollectionsList/>}/>
+            <Route path='/cart' element={<Cartscreen/>}/>
+            <Route path = '/payment' element={<Payment/>}/>
+            <Route path="" element /> {/* add the 404 page*/}
+          </Routes>
+        
       </BrowserRouter>
     </div>
   );
