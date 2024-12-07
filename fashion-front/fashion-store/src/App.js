@@ -1,8 +1,6 @@
 import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 import Home from "./screens/home";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
@@ -40,4 +38,3 @@ function App() {
 }
 
 export default App;
-
