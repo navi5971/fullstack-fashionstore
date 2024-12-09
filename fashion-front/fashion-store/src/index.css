@@ -97,9 +97,8 @@ a:focus {
   background: #f4efea;
   border: none;
   border-radius: 0;
-  position: fixed;
 
-  position: fixed !important;
+  /* position: fixed !important; */ /*Will cause other components to go under the nav bar*/
   display: flex;
   z-index: 100;
   width: 100%;
