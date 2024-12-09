@@ -3,18 +3,17 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Home from "./screens/home";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import Itemcard from "./components/product/itemcard";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Search from "./components/search";
 import SearchResults from "./components/product/searchresults";
 import Dash from "./screens/dash";
-import CollectionCard from "./components/collectioncard";
 import CollectionsList from "./components/collectionlist";
 import ProductForm from "./components/product/productfrom";
 import Cartscreen from "./screens/cartscreen";
 import Payment from "./screens/paymentform";
 import { NotFound } from "./screens/404";
+import Wishlist from "./screens/wishlist";
 
 function App() {
   return (
@@ -30,6 +29,7 @@ function App() {
           <Route path="/collection" element={<CollectionsList />} />
           <Route path="/cart" element={<Cartscreen />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/wishlist" element={<Wishlist />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
