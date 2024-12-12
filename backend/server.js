@@ -33,9 +33,9 @@ mongoose.connection.on('connected', () => {
   console.log('MongoDB connected (Event: connected)');
 });
 
-mongoose.connection.once('open', () => {
-  console.log('MongoDB connected (Event: open)');
-});
+//mongoose.connection.once('open', () => {
+  //console.log('MongoDB connected (Event: open)');
+//});
 
 mongoose.connection.on('error', (err) => {
   console.error('MongoDB connection error (Event: error):', err);

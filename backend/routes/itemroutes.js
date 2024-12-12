@@ -1,4 +1,4 @@
-//const cors = require('cors');
+const cors = require('cors');
 //app.use(cors()); 
 
 const express = require("express")
@@ -8,14 +8,14 @@ const Review = require("../models/review");
 const mongoose = require('mongoose');
 
 console.log('Stock model imported:', Item);
-const { getAllItems,
+const { getallitems,
   addItem,
   updateItem,
   deleteItem,} = require("../controllers/itemcont");
 
 
 // Route to get all items
-router.get('/items', getAllItems);
+router.get('/items', getallitems);
 
 // Route to add a new item
 router.post('/items', addItem);

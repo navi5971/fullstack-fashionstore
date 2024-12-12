@@ -1,7 +1,7 @@
 const Item = require('../models/item');
 
 // get all items
-const getAllItems = async (req, res) => {
+const getallitems = async (req, res) => {
     try {
         const stocks = await Item.find({});
         console.log("Items fetched from DB:", stocks);
@@ -102,7 +102,7 @@ const getCollections = async (req, res) => {
     }
 };
 module.exports = {
-    getAllItems,
+    getallitems,
     addItem,
     updateItem,
     deleteItem,
