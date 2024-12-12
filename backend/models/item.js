@@ -8,7 +8,7 @@ const itemSchema = new mongoose.Schema({
   prices:  { type: Object, 
   required: true },
   category: { type: String, required: true },
-  //image: { type: String, required: true },
+  image: { type: String },
   description: { type: String, required: true },
   collection:{type: String},
   targetmarket:{type: String },
@@ -20,7 +20,7 @@ const itemSchema = new mongoose.Schema({
 
 
 
-const Item = mongoose.model("Item", itemSchema, "stocks");//here stock is db name and the itemModel is refernced in server.js
+const Item = mongoose.model("Item", itemSchema, "stocks");////here stock is db name and the itemModel is refernced in server.js
 console.log('Item model created:', Item);
 
 
